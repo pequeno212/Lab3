@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="metafly" params="prefix">
+    
+  <xacro:property name="body_length" value="0.25" />
+  <xacro:property name="body_radius" value="0.025" />
+  <xacro:property name="wing_thickness" value="0.001" />
+  <xacro:property name="wing_length" value="${body_length}" />
+  <xacro:property name="wing_width" value="0.25" />
+  <xacro:property name="wing_thickness" value="0.001" />
+
+    <!-- LINKS -->
+    <!-- base link -->
+    <link name="${prefix}base_link">
+
+      <!-- body -->
+      <visual>
+        <origin xyz="0 0 0" rpy="${radians(90)} 0 0" />
+        <geometry>
+          <cylinder length="${body_length}" radius="${body_radius}" />
+        </geometry>
+        <material name="light_grey"/>
+      </visual>
+
+      <!-- head -->
+      <visual>
+        <origin xyz="0 ${body_length/2} 0" rpy="0 0 0" />
+        <geometry>
+          <sphere radius="${body_radius*1.5}"/>
+        </geometry>
+      </visual>
+
+
+    </link>
+
+    <!-- wing 1 -->
+    <link name="${prefix}wing1">
+      <visual>
+        <origin xyz="${-wing_width/2} 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${wing_width} ${wing_length} ${wing_thickness}" />
+        </geometry>
+        <material name="red"/>
+      </visual>
+    </link>
+
+  <!-- wing 2 -->
+    <link name="${prefix}wing2">
+      <visual>
+        <origin xyz="${wing_width/2} 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${wing_width} ${wing_length} ${wing_thickness}" />
+        </geometry>
+        <material name="green"/>
+      </visual>
+    </link>
+
+    <!-- JOINTS -->
+
+    <!-- joint 1 -->
+    <joint name="${prefix}joint1" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="${prefix}base_link" />
+      <child link="${prefix}wing1" />
+      <axis xyz="0 1 0" />
+      <limit effort="0" lower="${radians(-90)}" upper="${radians(90)}" velocity="0" />
+    </joint>
+    <!-- joint 2 -->
+    <joint name="${prefix}joint2" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="${prefix}base_link" />
+      <child link="${prefix}wing2" />
+      <axis xyz="0 1 0" />
+      <limit effort="0" lower="${radians(-90)}" upper="${radians(90)}" velocity="0" />
+    </joint>
+    
+    <!-- END JOINTS -->
+
+  </xacro:macro>
+</robot>

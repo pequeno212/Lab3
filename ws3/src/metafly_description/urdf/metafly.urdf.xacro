@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="metafly">
+
+  <!-- Use this if parameters are set from the launch file, otherwise delete -->
+  <xacro:arg name="prefix" default="" />
+
+  <xacro:include filename="$(find metafly_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find metafly_description)/urdf/metafly_macro.xacro" />
+
+  <!-- Load robot's macro with parameters -->
+  <!-- set prefix if multiple robots are used -->
+  <xacro:metafly prefix="$(arg prefix)"/>
+
+</robot>
